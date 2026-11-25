@@ -4,5 +4,10 @@
              RequestedThemeVariant="Light">
     <Application.Styles>
         <FluentTheme />
+        <!-- macOS'un varsayılan yazı tipi (Helvetica) büyük Türkçe harflerin (İ, Ö, Ü, Ğ) üst
+             işaretlerini kesiyor; Helvetica Neue'de bu sorun yok. Windows'ta Segoe UI kullanılır. -->
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="Helvetica Neue, Segoe UI, Arial" />
+        </Style>
     </Application.Styles>
 </Application>
