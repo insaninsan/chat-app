@@ -122,5 +122,5 @@ Her mesaj tek satırlık bir JSON nesnesidir; satır sonu mesajın bittiğini g�
 
 ## Öğrenci
 
-- **Ad Soyad:** _<Adınız Soyadınız>_
-- **Öğrenci No:** _<Öğrenci numaranız>_
+- **Ad Soyad:** Şerif Bayram
+- **Öğrenci No:** 225541018
