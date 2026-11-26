@@ -50,6 +50,7 @@ Visual Studio / Rider ile: `ChatApp.sln` dosyasını açın, önce `ChatServer`,
 - Aynı kullanıcı adıyla ikinci kez katılım reddedilir (büyük/küçük harf duyarsız)
 - 10 saniye içinde kullanıcı adı göndermeyen bağlantılar kapatılır
 - Özel mesajların **içeriği** sunucu kaydına yazılmaz, yalnızca kimin kime gönderdiği yazılır
+- **İstemciyi sohbetten çıkarma:** listeden seçilen istemciye bildirim gönderilir, bağlantısı kapatılır ve diğer kullanıcılara "… sunucu tarafından sohbetten çıkarıldı" duyurulur
 - Sunucu durdurulduğunda tüm istemcilere bildirim gönderilir
 
 **İstemci**

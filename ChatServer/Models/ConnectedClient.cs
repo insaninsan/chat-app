@@ -18,6 +18,19 @@ public sealed class ConnectedClient
     public DateTime ConnectedAt { get; }
     public MessageConnection Connection { get; }
 
+    /// <summary>
+    /// Sunucu yöneticisi bu istemciyi attıysa true. Ayrılma bildiriminde
+    /// "ayrıldı" yerine "çıkarıldı" yazılması için kullanılır.
+    /// (Farklı iş parçacıklarından okunduğu için volatile.)
+    /// </summary>
+    public bool WasKicked
+    {
+        get => Volatile.Read(ref wasKicked);
+        set => Volatile.Write(ref wasKicked, value);
+    }
+
+    private bool wasKicked;
+
     /// <summary>Sunucu penceresindeki listede gösterilen satır.</summary>
     public string DisplayText => $"{Username}   ({RemoteEndPoint})   bağlanma: {ConnectedAt:HH:mm:ss}";
 

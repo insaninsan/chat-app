@@ -79,6 +79,24 @@ public class ChatServerHost
         Log?.Invoke(this, "Sunucu durduruldu.");
     }
 
+    /// <summary>
+    /// İstemciyi sohbetten çıkarır: önce kendisine bildirim gönderilir, sonra bağlantısı kapatılır.
+    /// Bağlantı kapanınca istemcinin dinleme döngüsü biter ve listeden çıkarılması orada yapılır.
+    /// </summary>
+    public async Task KickAsync(ConnectedClient client)
+    {
+        lock (clientsLock)
+        {
+            if (!clients.Contains(client))
+                return;  // Bu arada zaten ayrılmış
+        }
+
+        client.WasKicked = true;
+        Log?.Invoke(this, $"{client.Username} sunucu tarafından çıkarılıyor.");
+        await TrySendAsync(client, ChatMessage.System("Sunucu yöneticisi tarafından sohbetten çıkarıldınız."));
+        client.Connection.Dispose();
+    }
+
     // ===================== Bağlantı kabulü =====================
 
     private async Task AcceptClientsAsync(TcpListener activeListener, CancellationToken token)
@@ -268,10 +286,11 @@ public class ChatServerHost
         if (!removed || token.IsCancellationRequested)
             return;
 
-        Log?.Invoke(this, $"{client.Username} ayrıldı.");
+        string reason = client.WasKicked ? "sunucu tarafından sohbetten çıkarıldı" : "sohbetten ayrıldı";
+        Log?.Invoke(this, $"{client.Username} {(client.WasKicked ? "çıkarıldı" : "ayrıldı")}.");
         ClientsChanged?.Invoke(this, EventArgs.Empty);
 
-        await BroadcastAsync(ChatMessage.System($"{client.Username} sohbetten ayrıldı."));
+        await BroadcastAsync(ChatMessage.System($"{client.Username} {reason}."));
         await BroadcastUserListAsync();
     }
 

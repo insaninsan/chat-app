@@ -78,6 +78,19 @@ public partial class MainWindow : Window
         SetStatus("Sunucu durduruldu.");
     }
 
+    private async void KickButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (ClientsList.SelectedItem is not ConnectedClient client)
+            return;
+
+        KickButton.IsEnabled = false;
+        await server.KickAsync(client);
+        SetStatus($"{client.Username} ({client.RemoteEndPoint}) sohbetten çıkarıldı.");
+    }
+
+    private void ClientsList_SelectionChanged(object? sender, SelectionChangedEventArgs e) =>
+        KickButton.IsEnabled = ClientsList.SelectedItem is ConnectedClient;
+
     // ===================== Arayüz güncelleme =====================
 
     private void AddLog(string text)
@@ -93,6 +106,7 @@ public partial class MainWindow : Window
             clients.Add(client);
 
         ClientsHeader.Text = $"Bağlı istemciler ({clients.Count})";
+        KickButton.IsEnabled = ClientsList.SelectedItem is ConnectedClient;
     }
 
     private void UpdateServerUi()

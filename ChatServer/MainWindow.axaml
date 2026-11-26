@@ -51,8 +51,11 @@
             <!-- Bağlı istemciler -->
             <DockPanel Grid.Column="0" Margin="0,0,10,0">
                 <TextBlock x:Name="ClientsHeader" DockPanel.Dock="Top" Classes="header" />
+                <Button x:Name="KickButton" DockPanel.Dock="Bottom" Margin="0,8,0,0"
+                        Content="Seçili istemciyi sohbetten çıkar" Click="KickButton_Click" />
                 <ListBox x:Name="ClientsList" Classes="compact"
-                         BorderBrush="#DDDDDD" BorderThickness="1">
+                         BorderBrush="#DDDDDD" BorderThickness="1"
+                         SelectionChanged="ClientsList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:ConnectedClient">
                             <TextBlock Text="{Binding DisplayText}" />
